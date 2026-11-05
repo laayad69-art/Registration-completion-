@@ -94,49 +94,23 @@
   .check-row input:checked ~ .course-name{color:#fff;font-weight:700}
   .course-name{font-size:14.5px;color:#d6e3f5}
 
-  .dropzone{
-    margin-top:12px;padding:26px 16px;border-radius:14px;
-    border:2px dashed rgba(56,239,125,.35);
-    background:linear-gradient(180deg,rgba(56,239,125,.05),rgba(56,239,125,.01));
-    text-align:center;cursor:pointer;transition:.2s;position:relative;
-  }
-  .dropzone:hover,.dropzone.drag{border-color:var(--accent);background:linear-gradient(180deg,rgba(56,239,125,.12),rgba(56,239,125,.03))}
-  .dropzone.drag{transform:scale(1.01)}
-  .dz-icon{
-    width:52px;height:52px;margin:0 auto 10px;border-radius:50%;
-    display:grid;place-items:center;
-    background:radial-gradient(circle at 30% 30%,rgba(56,239,125,.35),rgba(17,153,142,.15));
-    border:1px solid rgba(56,239,125,.4);
-  }
-  .dz-icon svg{width:24px;height:24px;stroke:var(--accent);stroke-width:2;fill:none}
-  .dz-title{font-size:14px;font-weight:700;color:#e9f1ff;margin-bottom:3px}
-  .dz-sub{font-size:11.5px;color:var(--muted)}
-  .dz-preview{
-    margin-top:12px;display:none;align-items:center;gap:10px;
-    background:rgba(0,0,0,.35);border:1px solid var(--stroke);
-    border-radius:12px;padding:8px;text-align:right;
-  }
-  .dz-preview img{width:52px;height:52px;object-fit:cover;border-radius:8px;border:1px solid var(--stroke)}
-  .dz-preview .info{flex:1;min-width:0}
-  .dz-preview .name{font-size:12.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .dz-preview .meta{font-size:11px;color:var(--muted)}
-  .dz-preview .remove{
-    background:rgba(255,92,92,.15);border:1px solid rgba(255,92,92,.4);
-    color:#ffb0b0;border-radius:8px;padding:6px 10px;font-size:11px;cursor:pointer;
-    font-family:inherit;transition:.18s;
-  }
-  .dz-preview .remove:hover{background:rgba(255,92,92,.3)}
-
   button.submit{
     width:100%;margin-top:26px;padding:17px;border:none;border-radius:14px;
     background:linear-gradient(135deg,var(--accent2),var(--accent));
     color:#032013;font-size:17px;font-weight:900;letter-spacing:.4px;
-    cursor:pointer;transition:transform .15s, box-shadow .15s, filter .15s;
+    cursor:pointer;transition:transform .15s, box-shadow .15s;
     box-shadow:0 14px 30px rgba(56,239,125,.28), inset 0 1px 0 rgba(255,255,255,.35);
-    display:flex;align-items:center;justify-content:center;gap:10px;
+    display:flex;align-items:center;justify-content:center;
     position:relative;overflow:hidden;
   }
+  button.submit::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);
+    transform:translateX(-120%);transition:transform .6s;
+  }
+  button.submit:hover::after{transform:translateX(120%)}
   button.submit:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(56,239,125,.45)}
+  button.submit:active{transform:translateY(0)}
   button.submit:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
 
   .msg{margin-top:16px;padding:13px 15px;border-radius:12px;text-align:center;font-size:14px;font-weight:600;display:none}
@@ -171,6 +145,7 @@
   </div>
 
   <form id="regForm" novalidate>
+
     <div class="section">
       <div class="section-title">المرحلة الدراسية</div>
       <select id="stage" required>
@@ -189,24 +164,26 @@
           <span class="course-name">JavaScript 42</span>
         </label>
       </div>
-      <div class="dropzone" id="g1dz">
-        <div class="dz-icon"><svg viewBox="0 0 24 24"><path d="M12 16V4m0 0l-4 4m4-4l4 4"/><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg></div>
-        <div class="dz-title">ارفع صورة تأكيد إتمام المستوى</div>
-        <div class="dz-sub">اضغط أو اسحب الصورة هنا — JPG/PNG، أقل من 5MB</div>
-        <input type="file" accept="image/*" id="g1img" hidden>
-        <div class="dz-preview" id="g1preview"></div>
-      </div>
     </div>
 
     <div id="g2Box" class="section hidden">
       <div class="section-title">اختر مستوى أو أكثر</div>
       <div class="checks">
-        <label class="check-row"><input type="checkbox" class="g2course" value="JavaScript 54"><span class="box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span class="course-name">JavaScript 54</span></label>
-        <label class="check-row"><input type="checkbox" class="g2course" value="Python 25"><span class="box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span class="course-name">Python 25</span></label>
-        <label class="check-row"><input type="checkbox" class="g2course" value="الثقافة المالية"><span class="box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span class="course-name">الثقافة المالية</span></label>
-      </div>
-      <div id="g2uploads" style="margin-top:12px">
-        <div class="dz-sub" style="text-align:center;padding:10px 0">ارفع صورة تأكيد لكل مستوى اخترته</div>
+        <label class="check-row">
+          <input type="checkbox" class="g2course" value="JavaScript 54">
+          <span class="box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span class="course-name">JavaScript 54</span>
+        </label>
+        <label class="check-row">
+          <input type="checkbox" class="g2course" value="Python 25">
+          <span class="box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span class="course-name">Python 25</span>
+        </label>
+        <label class="check-row">
+          <input type="checkbox" class="g2course" value="الثقافة المالية">
+          <span class="box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span class="course-name">الثقافة المالية</span>
+        </label>
       </div>
     </div>
 
@@ -214,8 +191,10 @@
       <div class="section-title">بيانات الطالب</div>
       <label for="fullname">الاسم الرباعي</label>
       <input type="text" id="fullname" required>
+
       <label for="username">اسم المستخدم في المنصة</label>
       <input type="text" id="username" required>
+
       <label for="password">كلمة المرور</label>
       <input type="password" id="password" required>
     </div>
@@ -233,12 +212,10 @@
 
 <script>
 const WHATSAPP_NUMBER = "201275241517";
-const MAX_BYTES = 5 * 1024 * 1024;
 
 const stageSel = document.getElementById('stage');
 const g1Box = document.getElementById('g1Box');
 const g2Box = document.getElementById('g2Box');
-const g2uploads = document.getElementById('g2uploads');
 const form = document.getElementById('regForm');
 const result = document.getElementById('result');
 const submitBtn = document.getElementById('submitBtn');
@@ -249,78 +226,10 @@ stageSel.addEventListener('change', () => {
   g2Box.classList.toggle('hidden', stageSel.value !== 'grade2');
 });
 
-document.querySelectorAll('.g2course').forEach(cb => cb.addEventListener('change', rebuildG2Uploads));
-
-function humanSize(b){return b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(b/1048576).toFixed(2)+' MB'}
-
-function setupDropzone(dz, input, previewEl) {
-  const openPicker = () => input.click();
-  dz.addEventListener('click', e => { if (e.target.closest('.remove')) return; openPicker(); });
-  ['dragover','dragenter'].forEach(ev => dz.addEventListener(ev, e => {e.preventDefault();dz.classList.add('drag')}));
-  ['dragleave','drop'].forEach(ev => dz.addEventListener(ev, e => {e.preventDefault();dz.classList.remove('drag')}));
-  dz.addEventListener('drop', e => { const f = e.dataTransfer.files[0]; if (f) setFile(f); });
-  input.addEventListener('change', () => { const f = input.files[0]; if (f) setFile(f); });
-
-  function setFile(file) {
-    if (!file.type.startsWith('image/')) return showMsg('الملف لازم يكون صورة', false);
-    if (file.size > MAX_BYTES) return showMsg('حجم الصورة أكبر من 5MB', false);
-    const dt = new DataTransfer();
-    dt.items.add(file);
-    input.files = dt.files;
-    renderPreview(file);
-  }
-  function renderPreview(file){
-    const url = URL.createObjectURL(file);
-    previewEl.style.display='flex';
-    previewEl.innerHTML = '';
-    const img = document.createElement('img'); img.src = url; img.alt = '';
-    const info = document.createElement('div'); info.className = 'info';
-    const nameEl = document.createElement('div'); nameEl.className = 'name'; nameEl.textContent = file.name;
-    const metaEl = document.createElement('div'); metaEl.className = 'meta'; metaEl.textContent = humanSize(file.size);
-    info.appendChild(nameEl); info.appendChild(metaEl);
-    const removeBtn = document.createElement('button'); removeBtn.type = 'button'; removeBtn.className = 'remove'; removeBtn.textContent = 'حذف';
-    previewEl.appendChild(img); previewEl.appendChild(info); previewEl.appendChild(removeBtn);
-    removeBtn.addEventListener('click', ev => {
-      ev.stopPropagation();
-      input.value='';
-      previewEl.style.display='none';
-      previewEl.innerHTML='';
-      URL.revokeObjectURL(url);
-    });
-  }
-}
-
-setupDropzone(document.getElementById('g1dz'), document.getElementById('g1img'), document.getElementById('g1preview'));
-
-function rebuildG2Uploads() {
-  const selected = [...document.querySelectorAll('.g2course:checked')].map(c => c.value);
-  g2uploads.innerHTML = selected.length ? '' : '<div class="dz-sub" style="text-align:center;padding:10px 0">ارفع صورة تأكيد لكل مستوى اخترته</div>';
-  selected.forEach((course, idx) => {
-    const id = 'g2img_' + idx;
-    const wrap = document.createElement('div');
-    wrap.innerHTML = `
-      <div class="dropzone" id="${id}dz">
-        <div class="dz-icon"><svg viewBox="0 0 24 24"><path d="M12 16V4m0 0l-4 4m4-4l4 4"/><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg></div>
-        <div class="dz-title"></div>
-        <div class="dz-sub">اضغط أو اسحب الصورة هنا — أقل من 5MB</div>
-        <input type="file" accept="image/*" id="${id}" hidden>
-        <div class="dz-preview" id="${id}preview"></div>
-      </div>`;
-    wrap.querySelector('.dz-title').textContent = 'صورة تأكيد: ' + course;
-    g2uploads.appendChild(wrap);
-    setupDropzone(document.getElementById(id+'dz'), document.getElementById(id), document.getElementById(id+'preview'));
-  });
-}
-
 function showMsg(text, ok) {
   result.textContent = text;
   result.className = 'msg show ' + (ok ? 'ok' : 'err');
   if (ok) setTimeout(() => result.classList.remove('show'), 8000);
-}
-
-async function sha256Hex(text) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
-  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
 function validate() {
@@ -332,19 +241,14 @@ function validate() {
 
   if (stageSel.value === 'grade1') {
     if (!document.querySelector('.g1course:checked')) return 'اختر مستوى JavaScript 42';
-    if (!document.getElementById('g1img').files[0]) return 'ارفع صورة تأكيد إتمام المستوى';
   } else {
     const checked = [...document.querySelectorAll('.g2course:checked')];
     if (!checked.length) return 'اختر مستوى واحد على الأقل';
-    for (let i = 0; i < checked.length; i++) {
-      const input = document.getElementById('g2img_' + i);
-      if (!input || !input.files[0]) return `ارفع صورة تأكيد لمستوى: ${checked[i].value}`;
-    }
   }
   return null;
 }
 
-form.addEventListener('submit', async e => {
+form.addEventListener('submit', e => {
   e.preventDefault();
   const err = validate();
   if (err) return showMsg(err, false);
@@ -357,7 +261,6 @@ form.addEventListener('submit', async e => {
     const fullname = document.getElementById('fullname').value.trim();
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
-    const passwordHash = await sha256Hex(password);
     const stageLabel = stage === 'grade1' ? 'الصف الأول الثانوي' : 'الصف الثاني الثانوي (بكالوريا)';
 
     let courses = [];
@@ -374,20 +277,17 @@ form.addEventListener('submit', async e => {
       `📚 المستويات: ${courses.join(' , ')}\n` +
       `👤 الاسم الرباعي: ${fullname}\n` +
       `🔑 اسم المستخدم: ${username}\n` +
-      `🔒 كلمة المرور (hash): ${passwordHash}\n` +
+      `🔒 كلمة المرور: ${password}\n` +
       `🕒 الوقت: ${new Date().toISOString()}`;
 
     const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
     window.open(waUrl, '_blank');
 
-    showMsg('تم فتح واتساب — اضغط "إرسال" لإتمام التسجيل، ثم أرسل صور التأكيد يدوياً.', true);
+    showMsg('تم فتح واتساب — اضغط "إرسال" لإتمام التسجيل.', true);
     form.reset();
     g1Box.classList.add('hidden');
     g2Box.classList.add('hidden');
-    document.getElementById('g1preview').style.display='none';
-    document.getElementById('g1preview').innerHTML='';
-    rebuildG2Uploads();
   } catch (ex) {
     showMsg('حدث خطأ: ' + ex.message, false);
   } finally {
