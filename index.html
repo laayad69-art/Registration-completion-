@@ -111,12 +111,6 @@
   .dz-icon svg{width:24px;height:24px;stroke:var(--accent);stroke-width:2;fill:none}
   .dz-title{font-size:14px;font-weight:700;color:#e9f1ff;margin-bottom:3px}
   .dz-sub{font-size:11.5px;color:var(--muted)}
-  .dz-file{
-    margin-top:10px;font-size:12px;color:var(--accent);
-    background:rgba(56,239,125,.12);border-radius:20px;
-    padding:5px 12px;display:inline-block;max-width:100%;
-    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-  }
   .dz-preview{
     margin-top:12px;display:none;align-items:center;gap:10px;
     background:rgba(0,0,0,.35);border:1px solid var(--stroke);
@@ -142,21 +136,8 @@
     display:flex;align-items:center;justify-content:center;gap:10px;
     position:relative;overflow:hidden;
   }
-  button.submit::after{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);
-    transform:translateX(-120%);transition:transform .6s;
-  }
-  button.submit:hover::after{transform:translateX(120%)}
   button.submit:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(56,239,125,.45)}
-  button.submit:active{transform:translateY(0)}
-  button.submit:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none;filter:grayscale(.2)}
-  button.submit .spinner{
-    width:16px;height:16px;border:2px solid rgba(4,33,15,.4);border-top-color:#04210f;
-    border-radius:50%;animation:spin .7s linear infinite;display:none;
-  }
-  button.submit.loading .spinner{display:inline-block}
-  @keyframes spin{to{transform:rotate(360deg)}}
+  button.submit:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
 
   .msg{margin-top:16px;padding:13px 15px;border-radius:12px;text-align:center;font-size:14px;font-weight:600;display:none}
   .msg.show{display:block}
@@ -170,13 +151,8 @@
     font-size:10.5px;
     color:var(--muted);
     opacity:.75;
-    letter-spacing:.3px;
   }
-  .footer-credit .zmax{
-    color:var(--accent);
-    font-weight:700;
-    letter-spacing:1px;
-  }
+  .footer-credit .zmax{color:var(--accent);font-weight:700;letter-spacing:1px}
 
   @media (max-width:520px){
     body{padding:22px 10px}
@@ -195,7 +171,6 @@
   </div>
 
   <form id="regForm" novalidate>
-
     <div class="section">
       <div class="section-title">المرحلة الدراسية</div>
       <select id="stage" required>
@@ -214,10 +189,8 @@
           <span class="course-name">JavaScript 42</span>
         </label>
       </div>
-      <div class="dropzone" id="g1dz" data-input="g1img">
-        <div class="dz-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0l-4 4m4-4l4 4"/><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
-        </div>
+      <div class="dropzone" id="g1dz">
+        <div class="dz-icon"><svg viewBox="0 0 24 24"><path d="M12 16V4m0 0l-4 4m4-4l4 4"/><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg></div>
         <div class="dz-title">ارفع صورة تأكيد إتمام المستوى</div>
         <div class="dz-sub">اضغط أو اسحب الصورة هنا — JPG/PNG، أقل من 5MB</div>
         <input type="file" accept="image/*" id="g1img" hidden>
@@ -228,21 +201,9 @@
     <div id="g2Box" class="section hidden">
       <div class="section-title">اختر مستوى أو أكثر</div>
       <div class="checks">
-        <label class="check-row">
-          <input type="checkbox" class="g2course" value="JavaScript 54">
-          <span class="box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
-          <span class="course-name">JavaScript 54</span>
-        </label>
-        <label class="check-row">
-          <input type="checkbox" class="g2course" value="Python 25">
-          <span class="box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
-          <span class="course-name">Python 25</span>
-        </label>
-        <label class="check-row">
-          <input type="checkbox" class="g2course" value="الثقافة المالية">
-          <span class="box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
-          <span class="course-name">الثقافة المالية</span>
-        </label>
+        <label class="check-row"><input type="checkbox" class="g2course" value="JavaScript 54"><span class="box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span class="course-name">JavaScript 54</span></label>
+        <label class="check-row"><input type="checkbox" class="g2course" value="Python 25"><span class="box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span class="course-name">Python 25</span></label>
+        <label class="check-row"><input type="checkbox" class="g2course" value="الثقافة المالية"><span class="box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span class="course-name">الثقافة المالية</span></label>
       </div>
       <div id="g2uploads" style="margin-top:12px">
         <div class="dz-sub" style="text-align:center;padding:10px 0">ارفع صورة تأكيد لكل مستوى اخترته</div>
@@ -253,17 +214,14 @@
       <div class="section-title">بيانات الطالب</div>
       <label for="fullname">الاسم الرباعي</label>
       <input type="text" id="fullname" required>
-
       <label for="username">اسم المستخدم في المنصة</label>
       <input type="text" id="username" required>
-
       <label for="password">كلمة المرور</label>
       <input type="password" id="password" required>
     </div>
 
     <button type="submit" class="submit" id="submitBtn">
-      <span class="spinner"></span>
-      <span id="submitText">إرسال التسجيل</span>
+      <span id="submitText">إرسال التسجيل عبر واتساب</span>
     </button>
     <div id="result" class="msg"></div>
   </form>
@@ -274,9 +232,7 @@
 </div>
 
 <script>
-const TELEGRAM_BOT_TOKEN = "6506189895:AAE8luho5ewClXD2nyzq3JA4OdZdfSlc5CA";
-const TELEGRAM_CHAT_ID = "6895524607";
-const TELEGRAM_API = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
+const WHATSAPP_NUMBER = "201275241517";
 const MAX_BYTES = 5 * 1024 * 1024;
 
 const stageSel = document.getElementById('stage');
@@ -299,20 +255,12 @@ function humanSize(b){return b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(
 
 function setupDropzone(dz, input, previewEl) {
   const openPicker = () => input.click();
-  dz.addEventListener('click', e => {
-    if (e.target.closest('.remove')) return;
-    openPicker();
-  });
+  dz.addEventListener('click', e => { if (e.target.closest('.remove')) return; openPicker(); });
   ['dragover','dragenter'].forEach(ev => dz.addEventListener(ev, e => {e.preventDefault();dz.classList.add('drag')}));
   ['dragleave','drop'].forEach(ev => dz.addEventListener(ev, e => {e.preventDefault();dz.classList.remove('drag')}));
-  dz.addEventListener('drop', e => {
-    const f = e.dataTransfer.files[0];
-    if (f) setFile(f);
-  });
-  input.addEventListener('change', () => {
-    const f = input.files[0];
-    if (f) setFile(f);
-  });
+  dz.addEventListener('drop', e => { const f = e.dataTransfer.files[0]; if (f) setFile(f); });
+  input.addEventListener('change', () => { const f = input.files[0]; if (f) setFile(f); });
+
   function setFile(file) {
     if (!file.type.startsWith('image/')) return showMsg('الملف لازم يكون صورة', false);
     if (file.size > MAX_BYTES) return showMsg('حجم الصورة أكبر من 5MB', false);
@@ -325,34 +273,13 @@ function setupDropzone(dz, input, previewEl) {
     const url = URL.createObjectURL(file);
     previewEl.style.display='flex';
     previewEl.innerHTML = '';
-
-    const img = document.createElement('img');
-    img.src = url;
-    img.alt = '';
-
-    const info = document.createElement('div');
-    info.className = 'info';
-
-    const nameEl = document.createElement('div');
-    nameEl.className = 'name';
-    nameEl.textContent = file.name;
-
-    const metaEl = document.createElement('div');
-    metaEl.className = 'meta';
-    metaEl.textContent = humanSize(file.size);
-
-    info.appendChild(nameEl);
-    info.appendChild(metaEl);
-
-    const removeBtn = document.createElement('button');
-    removeBtn.type = 'button';
-    removeBtn.className = 'remove';
-    removeBtn.textContent = 'حذف';
-
-    previewEl.appendChild(img);
-    previewEl.appendChild(info);
-    previewEl.appendChild(removeBtn);
-
+    const img = document.createElement('img'); img.src = url; img.alt = '';
+    const info = document.createElement('div'); info.className = 'info';
+    const nameEl = document.createElement('div'); nameEl.className = 'name'; nameEl.textContent = file.name;
+    const metaEl = document.createElement('div'); metaEl.className = 'meta'; metaEl.textContent = humanSize(file.size);
+    info.appendChild(nameEl); info.appendChild(metaEl);
+    const removeBtn = document.createElement('button'); removeBtn.type = 'button'; removeBtn.className = 'remove'; removeBtn.textContent = 'حذف';
+    previewEl.appendChild(img); previewEl.appendChild(info); previewEl.appendChild(removeBtn);
     removeBtn.addEventListener('click', ev => {
       ev.stopPropagation();
       input.value='';
@@ -363,52 +290,32 @@ function setupDropzone(dz, input, previewEl) {
   }
 }
 
-setupDropzone(
-  document.getElementById('g1dz'),
-  document.getElementById('g1img'),
-  document.getElementById('g1preview')
-);
+setupDropzone(document.getElementById('g1dz'), document.getElementById('g1img'), document.getElementById('g1preview'));
 
 function rebuildG2Uploads() {
   const selected = [...document.querySelectorAll('.g2course:checked')].map(c => c.value);
-  g2uploads.innerHTML = selected.length
-    ? ''
-    : '<div class="dz-sub" style="text-align:center;padding:10px 0">ارفع صورة تأكيد لكل مستوى اخترته</div>';
-
+  g2uploads.innerHTML = selected.length ? '' : '<div class="dz-sub" style="text-align:center;padding:10px 0">ارفع صورة تأكيد لكل مستوى اخترته</div>';
   selected.forEach((course, idx) => {
     const id = 'g2img_' + idx;
     const wrap = document.createElement('div');
     wrap.innerHTML = `
       <div class="dropzone" id="${id}dz">
-        <div class="dz-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0l-4 4m4-4l4 4"/><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
-        </div>
+        <div class="dz-icon"><svg viewBox="0 0 24 24"><path d="M12 16V4m0 0l-4 4m4-4l4 4"/><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg></div>
         <div class="dz-title"></div>
         <div class="dz-sub">اضغط أو اسحب الصورة هنا — أقل من 5MB</div>
-        <input type="file" accept="image/*" id="${id}" data-course="" hidden>
+        <input type="file" accept="image/*" id="${id}" hidden>
         <div class="dz-preview" id="${id}preview"></div>
       </div>`;
-    const dzTitle = wrap.querySelector('.dz-title');
-    const inputEl = wrap.querySelector('input[type=file]');
-    dzTitle.textContent = 'صورة تأكيد: ' + course;
-    inputEl.dataset.course = course;
+    wrap.querySelector('.dz-title').textContent = 'صورة تأكيد: ' + course;
     g2uploads.appendChild(wrap);
-    setupDropzone(
-      document.getElementById(id+'dz'),
-      document.getElementById(id),
-      document.getElementById(id+'preview')
-    );
+    setupDropzone(document.getElementById(id+'dz'), document.getElementById(id), document.getElementById(id+'preview'));
   });
 }
 
 function showMsg(text, ok) {
   result.textContent = text;
   result.className = 'msg show ' + (ok ? 'ok' : 'err');
-  if (ok) setTimeout(() => result.classList.remove('show'), 6000);
-}
-
-function escapeMd(s) {
-  return String(s).replace(/[_*\[\]()~`>#+\-=|{}.!\\]/g, '\\$&');
+  if (ok) setTimeout(() => result.classList.remove('show'), 8000);
 }
 
 async function sha256Hex(text) {
@@ -437,40 +344,13 @@ function validate() {
   return null;
 }
 
-async function sendTelegramMessage(text) {
-  const res = await fetch(`${TELEGRAM_API}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      chat_id: TELEGRAM_CHAT_ID,
-      text,
-      parse_mode: 'MarkdownV2',
-      disable_web_page_preview: true
-    })
-  });
-  const data = await res.json();
-  if (!data.ok) throw new Error('sendMessage: ' + (data.description || 'unknown'));
-}
-
-async function sendTelegramPhoto(file, caption) {
-  const fd = new FormData();
-  fd.append('chat_id', TELEGRAM_CHAT_ID);
-  fd.append('caption', escapeMd(caption));
-  fd.append('parse_mode', 'MarkdownV2');
-  fd.append('photo', file, file.name || 'image.jpg');
-  const res = await fetch(`${TELEGRAM_API}/sendPhoto`, { method: 'POST', body: fd });
-  const data = await res.json();
-  if (!data.ok) throw new Error('sendPhoto: ' + (data.description || 'unknown'));
-}
-
 form.addEventListener('submit', async e => {
   e.preventDefault();
   const err = validate();
   if (err) return showMsg(err, false);
 
   submitBtn.disabled = true;
-  submitBtn.classList.add('loading');
-  submitText.textContent = 'جارٍ الإرسال...';
+  submitText.textContent = 'جارٍ التحضير...';
 
   try {
     const stage = stageSel.value;
@@ -481,51 +361,38 @@ form.addEventListener('submit', async e => {
     const stageLabel = stage === 'grade1' ? 'الصف الأول الثانوي' : 'الصف الثاني الثانوي (بكالوريا)';
 
     let courses = [];
-    let images = [];
     if (stage === 'grade1') {
       courses = [document.querySelector('.g1course:checked').value];
-      images = [{ file: document.getElementById('g1img').files[0], course: courses[0] }];
     } else {
       courses = [...document.querySelectorAll('.g2course:checked')].map(c => c.value);
-      images = courses.map((course, i) => ({
-        file: document.getElementById('g2img_' + i).files[0],
-        course
-      }));
     }
 
-    for (const img of images) {
-      if (img.file.size > MAX_BYTES) throw new Error(`صورة ${img.course} أكبر من 5MB`);
-    }
-
-    const caption =
+    const message =
       `📥 تسجيل جديد\n` +
       `━━━━━━━━━━━━━━━\n` +
-      `🏫 المرحلة: ${escapeMd(stageLabel)}\n` +
-      `📚 المستويات: ${escapeMd(courses.join(' , '))}\n` +
-      `👤 الاسم الرباعي: ${escapeMd(fullname)}\n` +
-      `🔑 اسم المستخدم: ${escapeMd(username)}\n` +
-      `🔒 كلمة المرور (hash): ${escapeMd(passwordHash)}\n` +
-      `🕒 الوقت: ${escapeMd(new Date().toISOString())}`;
+      `🏫 المرحلة: ${stageLabel}\n` +
+      `📚 المستويات: ${courses.join(' , ')}\n` +
+      `👤 الاسم الرباعي: ${fullname}\n` +
+      `🔑 اسم المستخدم: ${username}\n` +
+      `🔒 كلمة المرور (hash): ${passwordHash}\n` +
+      `🕒 الوقت: ${new Date().toISOString()}`;
 
-    await sendTelegramMessage(caption);
-    for (const img of images) {
-      await sendTelegramPhoto(img.file, `📸 صورة تأكيد: ${img.course}`);
-    }
+    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
-    showMsg('تم إرسال تسجيلك بنجاح ✅', true);
+    window.open(waUrl, '_blank');
+
+    showMsg('تم فتح واتساب — اضغط "إرسال" لإتمام التسجيل، ثم أرسل صور التأكيد يدوياً.', true);
     form.reset();
     g1Box.classList.add('hidden');
     g2Box.classList.add('hidden');
     document.getElementById('g1preview').style.display='none';
     document.getElementById('g1preview').innerHTML='';
     rebuildG2Uploads();
-    window.scrollTo({top:0,behavior:'smooth'});
   } catch (ex) {
     showMsg('حدث خطأ: ' + ex.message, false);
   } finally {
     submitBtn.disabled = false;
-    submitBtn.classList.remove('loading');
-    submitText.textContent = 'إرسال التسجيل';
+    submitText.textContent = 'إرسال التسجيل عبر واتساب';
   }
 });
 </script>
