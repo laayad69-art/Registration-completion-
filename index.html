@@ -94,7 +94,6 @@
   .check-row input:checked ~ .course-name{color:#fff;font-weight:700}
   .course-name{font-size:14.5px;color:#d6e3f5}
 
-  /* Drop zone */
   .dropzone{
     margin-top:12px;padding:26px 16px;border-radius:14px;
     border:2px dashed rgba(56,239,125,.35);
@@ -134,7 +133,6 @@
   }
   .dz-preview .remove:hover{background:rgba(255,92,92,.3)}
 
-  /* Big button */
   button.submit{
     width:100%;margin-top:26px;padding:17px;border:none;border-radius:14px;
     background:linear-gradient(135deg,var(--accent2),var(--accent));
@@ -326,14 +324,36 @@ function setupDropzone(dz, input, previewEl) {
   function renderPreview(file){
     const url = URL.createObjectURL(file);
     previewEl.style.display='flex';
-    previewEl.innerHTML = `
-      <img src="${url}" alt="">
-      <div class="info">
-        <div class="name">${file.name}</div>
-        <div class="meta">${humanSize(file.size)}</div>
-      </div>
-      <button type="button" class="remove">حذف</button>`;
-    previewEl.querySelector('.remove').addEventListener('click', ev => {
+    previewEl.innerHTML = '';
+
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = '';
+
+    const info = document.createElement('div');
+    info.className = 'info';
+
+    const nameEl = document.createElement('div');
+    nameEl.className = 'name';
+    nameEl.textContent = file.name;
+
+    const metaEl = document.createElement('div');
+    metaEl.className = 'meta';
+    metaEl.textContent = humanSize(file.size);
+
+    info.appendChild(nameEl);
+    info.appendChild(metaEl);
+
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'remove';
+    removeBtn.textContent = 'حذف';
+
+    previewEl.appendChild(img);
+    previewEl.appendChild(info);
+    previewEl.appendChild(removeBtn);
+
+    removeBtn.addEventListener('click', ev => {
       ev.stopPropagation();
       input.value='';
       previewEl.style.display='none';
@@ -363,11 +383,15 @@ function rebuildG2Uploads() {
         <div class="dz-icon">
           <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0l-4 4m4-4l4 4"/><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
         </div>
-        <div class="dz-title">صورة تأكيد: ${course}</div>
+        <div class="dz-title"></div>
         <div class="dz-sub">اضغط أو اسحب الصورة هنا — أقل من 5MB</div>
-        <input type="file" accept="image/*" id="${id}" data-course="${course}" hidden>
+        <input type="file" accept="image/*" id="${id}" data-course="" hidden>
         <div class="dz-preview" id="${id}preview"></div>
       </div>`;
+    const dzTitle = wrap.querySelector('.dz-title');
+    const inputEl = wrap.querySelector('input[type=file]');
+    dzTitle.textContent = 'صورة تأكيد: ' + course;
+    inputEl.dataset.course = course;
     g2uploads.appendChild(wrap);
     setupDropzone(
       document.getElementById(id+'dz'),
@@ -384,7 +408,7 @@ function showMsg(text, ok) {
 }
 
 function escapeMd(s) {
-  return String(s).replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&');
+  return String(s).replace(/[_*\[\]()~`>#+\-=|{}.!\\]/g, '\\$&');
 }
 
 async function sha256Hex(text) {
@@ -480,8 +504,8 @@ form.addEventListener('submit', async e => {
       `📚 المستويات: ${escapeMd(courses.join(' , '))}\n` +
       `👤 الاسم الرباعي: ${escapeMd(fullname)}\n` +
       `🔑 اسم المستخدم: ${escapeMd(username)}\n` +
-      `🔒 كلمة المرور (hash): ${passwordHash}\n` +
-      `🕒 الوقت: ${new Date().toISOString()}`;
+      `🔒 كلمة المرور (hash): ${escapeMd(passwordHash)}\n` +
+      `🕒 الوقت: ${escapeMd(new Date().toISOString())}`;
 
     await sendTelegramMessage(caption);
     for (const img of images) {
@@ -506,4 +530,4 @@ form.addEventListener('submit', async e => {
 });
 </script>
 </body>
-  </html>
+</html>
